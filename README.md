@@ -16,6 +16,10 @@ Installation:
 The login username is: admin
 The password is randomly generated and printed when the script finishes the installation.
 
+Access the app on https://your-server-ip
+Don't forget to add a real SSL certificate!
+
 To reset the password and disable the 2FA, run:
 
 `php /var/www/html/setup <NEW-PASSWORD>`
+
