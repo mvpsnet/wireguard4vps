@@ -6,6 +6,9 @@ dpkg-reconfigure -f noninteractive unattended-upgrades
 systemctl enable --now apt-daily.timer
 systemctl enable --now apt-daily-upgrade.timer
 chown www-data:www-data /etc/wireguard
+a2enmod ssl
+a2ensite default-ssl
+systemctl restart apache2
 echo "net.ipv4.ip_forward = 1
 net.ipv6.conf.all.forwarding = 1" >/etc/sysctl.d/wg.conf
 sysctl --system
@@ -32,7 +35,7 @@ WantedBy=multi-user.target">/etc/systemd/system/wireguard4vps.service
 
 systemctl enable --now apache2
 cd /var/www/
-rm -rf html
+mv html html_old
 git clone https://github.com/mvpsnet/wireguard4vps
 mv wireguard4vps html
 chown www-data:www-data html
@@ -40,6 +43,8 @@ chown www-data:www-data html
 WGPASS=`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c16`
 
 sudo -u www-data php /var/www/html/setup.php $WGPASS > /dev/null
+
+systemctl --enable --now wg-quick@wg0
 
 systemctl enable --now wireguard4vps.service
 systemctl enable --now wireguard4vps.path
