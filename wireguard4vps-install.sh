@@ -44,7 +44,7 @@ WGPASS=`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c16`
 
 sudo -u www-data php /var/www/html/setup.php $WGPASS > /dev/null
 
-systemctl --enable --now wg-quick@wg0
+systemctl enable --now wg-quick@wg0
 
 systemctl enable --now wireguard4vps.service
 systemctl enable --now wireguard4vps.path
