@@ -3,6 +3,8 @@
 
 A simple GUI and installation script for Wireguard.
 
+![alt text](https://www.mvps.net/img/screens/wireguard.png)
+
 The installation script requires a clean installation of Debian 11. 
 
 This application is designed to run on an entire VPS without any other applications running on the vps.
