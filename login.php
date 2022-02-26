@@ -82,7 +82,8 @@ if(!empty($_POST['user'])&&!empty($_POST['pass'])){
         $_SESSION['timeout']=time()+1800;
         $_SESSION['ip']=$_SERVER['REMOTE_ADDR'];
         $_SESSION['key']=$passw[0]['val'];
-
+        $_SESSION['nonce']=base64_encode(openssl_random_pseudo_bytes(128));
+        
         $db->run("DELETE FROM logins");
         header("Location: index.php");
         exit;
