@@ -9,7 +9,7 @@ if (count(get_included_files()) == 1) {
             VPN clients
         </h1>
         <form action="/index.php?q=add" method="post" x-data="{showForm: false}">
-
+        <?php csrf_token(); ?>
             <div class="mb-4" x-show="showForm" x-transition>
                 <div class="mt-1 flex rounded-md shadow-sm">
                     <label for="profile_name"
