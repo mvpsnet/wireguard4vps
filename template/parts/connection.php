@@ -18,6 +18,7 @@ if (count(get_included_files()) == 1) {
 
             <div class="flex-grow">
                 <form action="/index.php?q=edit&ip=<?=$profile['ip'] ?>" class="flex gap-1 flex-wrap" x-data="{isEditing: false}" method="post">
+                    <?php csrf_token(); ?>
                     <input name="name" class="font-medium text-gray-800 px-1 py-1 rounded-md" :class="{'border border-gray-400': isEditing}" value="<?= $profile['name'] ?>"
                            x-bind:readonly="!isEditing"
                     >
