@@ -12,6 +12,7 @@ if (count(get_included_files()) == 1) {
 
         <form x-show="changePasswordModal" x-transition action="index.php?q=password" method="post"
               class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full sm:p-6">
+            <?php csrf_token(); ?>
             <div>
                 <div class="text-center">
                     <h3 class="text-lg leading-6 font-medium text-gray-900 items-baseline" id="modal-title">
