@@ -48,6 +48,10 @@ if ($q == "password") {
     $old_password = $_POST['old_password'];
     $new_password = $_POST['new_password'];
     do {
+        if(!csrf_check()){
+            $error_msg = "Invalid csrf token. Please refresh and try again.";
+            break;
+        }
         if ($new_password != $_POST['repeat_password']) {
             $error_msg = "The new passwords do not match.";
             break;
@@ -68,12 +72,12 @@ if ($q == "password") {
     } while (0);
 }
 
-if ($_config['twofa'] == "0" && $q != "2fa") {
+if ($_config['twofa'] == "0" && $q != "2fa" && csrf_check()) {
     $tfa = new tfa();
     $_config['tfa_key'] = $tfa->getPubKey();
     $db->run("INSERT into config (id,val) VALUES (:id,:val) ON CONFLICT(id) DO UPDATE SET val=:val2", [':val' => $_config['tfa_key'], ':val2' => $_config['tfa_key'], ':id' => "tfa_key"]);
 }
-if ($_config['twofa'] == "0" && $q == "2fa") {
+if ($_config['twofa'] == "0" && $q == "2fa" && csrf_check()) {
     $tfa = new tfa();
 
     if ($_POST['tfa'] == $tfa->getOtp($_config['tfa_key'])) {
@@ -87,7 +91,7 @@ if ($_config['twofa'] == "0" && $q == "2fa") {
 
 }
 
-if ($_config['twofa'] == "1" && $q == "disable2fa") {
+if ($_config['twofa'] == "1" && $q == "disable2fa" && csrf_check()) {
     $tfa = new tfa();
     if ($_POST['tfa'] == $tfa->getOtp($_config['tfa_key'])) {
 
@@ -101,6 +105,10 @@ if ($_config['twofa'] == "1" && $q == "disable2fa") {
 
 if ($q == "add") {
     do {
+        if(!csrf_check()){
+            $error_msg = "Invalid csrf token. Please refresh and try again.";
+            break;
+        }
         $r = $db->run("SELECT COUNT(1) as c from profiles");
         if ($r[0]['c'] > 250) {
             $error_msg = "You've reached the maximum number of active profiles - 250";
@@ -141,7 +149,7 @@ if ($q == "add") {
     } while (0);
 }
 
-if ($q == "edit") {
+if ($q == "edit" && csrf_check()) {
     $ip = preg_replace("/[^0-9.]/", "", $_GET['ip']);
     if (!empty($_POST['edit']) && $_POST['edit'] == 1 && !empty($_POST['name'])) {
         $name = htmlspecialchars($_POST['name'], ENT_QUOTES | ENT_HTML5);
