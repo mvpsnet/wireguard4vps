@@ -138,7 +138,30 @@ if (!function_exists('str_contains')) {
     }
 }
 
+function csrf_token($ret = false)
+{
+    $uniq = time();
+    $token = hash("sha512", $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_HOST'] . $_SERVER['HTTP_USER_AGENT'] . $_SESSION['nonce'] . $uniq);
 
+    if ($ret) {
+        return array("token" => $token, "time" => $uniq);
+    }
+    echo "<input type='hidden' name='csrf4_tken' value='$token'>";
+    echo "<input type='hidden' name='csrf4_time' value='$uniq'>";
+}
+
+function csrf_check()
+{
+    $uniq = $_REQUEST['csrf4_time'];
+    $token = hash("sha512", $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_HOST'] . $_SERVER['HTTP_USER_AGENT'] . $_SESSION['nonce'] . $uniq);
+    if ($token != $_POST['csrf4_tken']) {
+        return false;
+    }
+    if (time() - $uniq > 1800) {
+        return false;
+    }
+    return true;
+}
 
 $db_path = "/etc/wireguard/wireguard4vps.db";
 $db = new DB($db_path);
