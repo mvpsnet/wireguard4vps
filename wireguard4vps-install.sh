@@ -7,7 +7,11 @@ systemctl enable --now apt-daily.timer
 systemctl enable --now apt-daily-upgrade.timer
 chown www-data:www-data /etc/wireguard
 a2enmod ssl
+a2enmod rewrite
 a2ensite default-ssl
+echo "<Directory /var/www/html>
+AllowOverride All
+</Directory>">/etc/apache2/conf-enabled/htaccess.conf
 systemctl restart apache2
 echo "net.ipv4.ip_forward = 1
 net.ipv6.conf.all.forwarding = 1" >/etc/sysctl.d/wg.conf
