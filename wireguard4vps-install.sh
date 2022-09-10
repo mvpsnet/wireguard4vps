@@ -2,7 +2,6 @@ apt update
 apt -y install unattended-upgrades apt-listchanges
 echo unattended-upgrades unattended-upgrades/enable_auto_updates boolean true | debconf-set-selections
 dpkg-reconfigure -f noninteractive unattended-upgrades
-unattended-upgrade
 apt -y install git apache2 php php-sqlite3 wireguard sudo
 systemctl enable --now apt-daily.timer
 systemctl enable --now apt-daily-upgrade.timer
@@ -56,3 +55,5 @@ systemctl enable --now wireguard4vps.path
 
 echo "The wireguard4vps password is: $WGPASS"
 echo "The wireguard4vps username is: admin"
+
+unattended-upgrade > /dev/null &
