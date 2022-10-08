@@ -2,7 +2,7 @@ apt update
 apt -y install unattended-upgrades apt-listchanges
 echo unattended-upgrades unattended-upgrades/enable_auto_updates boolean true | debconf-set-selections
 dpkg-reconfigure -f noninteractive unattended-upgrades
-apt -y install git apache2 php php-sqlite3 wireguard sudo
+apt -y install git iptables apache2 php php-sqlite3 wireguard sudo
 systemctl enable --now apt-daily.timer
 systemctl enable --now apt-daily-upgrade.timer
 chown www-data:www-data /etc/wireguard
