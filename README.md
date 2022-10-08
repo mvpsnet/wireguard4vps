@@ -26,7 +26,9 @@ To reset the password and disable the 2FA, run:
 `php /var/www/html/setup.php <NEW-PASSWORD>`
 
 
-Installation with Nginx + SSL :
+
+
+- Installation with Nginx + SSL :
 
 Clone the repository
 'https://github.com/mvpsnet/wireguard4vps.git'
