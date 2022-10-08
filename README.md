@@ -31,16 +31,16 @@ To reset the password and disable the 2FA, run:
 - Installation with Nginx + SSL :
 
 Clone the repository
-'https://github.com/mvpsnet/wireguard4vps.git'
+`https://github.com/mvpsnet/wireguard4vps.git`
 
-Go to "ngnix-ssl" directory and give the execution permission.
+Go to `ngnix-ssl` directory and give the execution permission.
 
-'chmod +x wg-installer.sh'
+`chmod +x wg-installer.sh`
 
-Update the '$hostname' and '$mail' variable needed for the SSL certificate 
+Update the `$hostname` and `$mail` variable needed for the SSL certificate 
 
 then run it:
-'./wg-installer.sh'
+`./wg-installer.sh`
 
 
 
