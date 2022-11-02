@@ -23,5 +23,24 @@ Don't forget to add a real SSL certificate!
 
 To reset the password and disable the 2FA, run:
 
-`php /var/www/html/setup <NEW-PASSWORD>`
+`php /var/www/html/setup.php <NEW-PASSWORD>`
+
+
+
+
+- Installation with Nginx + SSL :
+
+Clone the repository
+`https://github.com/mvpsnet/wireguard4vps.git`
+
+Go to `ngnix-ssl` directory and give the execution permission.
+
+`chmod +x wg-installer.sh`
+
+Update the `$hostname` and `$mail` variable needed for the SSL certificate 
+
+then run it:
+`./wg-installer.sh`
+
+
 
