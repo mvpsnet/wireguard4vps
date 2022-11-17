@@ -39,6 +39,10 @@ if (count(get_included_files()) == 1) {
                             Save
                         </button>
 
+                        <?php if($profile['disabled']==0){ echo '<button type="submit" name="disable" x-show="!isEditing" value="1" class="btn btn-xs btn-success rounded-full mr-2 ml-auto" onclick="return confirm(\'Are you sure you wish to disable this profile?\');">Disable</button>';
+                        } else { echo '<button type="submit" name="enable" x-show="!isEditing" value="1" class="btn btn-xs btn-danger rounded-full mr-2 ml-auto" onclick="return confirm(\'Are you sure you wish to enable this profile?\');">Enable</button>'; }
+                        ?>
+
                         <button type="submit" name="delete" x-show="!isEditing" value="1" class="btn btn-xs rounded-full mr-2 ml-auto" onclick="return confirm('Are you sure?');">Delete</button>
                         <button type="button" x-show="isEditing" class="btn btn-xs rounded-full mr-2 ml-auto" @click="isEditing = false">Cancel</button>
                     </div>
