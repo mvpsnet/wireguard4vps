@@ -25,7 +25,9 @@ To reset the password and disable the 2FA, run:
 
 `php /var/www/html/setup.php <NEW-PASSWORD>`
 
+- Update to the latest version :
 
+`cd /var/www/html && git pull`
 
 
 - Installation with Nginx + SSL :
