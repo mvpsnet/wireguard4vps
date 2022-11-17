@@ -41,6 +41,13 @@ if ($_config['password'] != $_SESSION['key']) {
     exit;
 }
 
+// updating the DB schema on updates
+if($_config['dbversion']==0){
+    $db->run("ALTER table `profiles` ADD COLUMN `disabled` int(1) default '0' NOT NULL");
+    $db->run("INSERT into config (id,val) VALUES ('dbversion',1)");
+    $_config['dbversion']++;
+}
+
 $rewrite_config = false;
 $q = $_GET['q'] ?? "";
 
@@ -157,7 +164,14 @@ if ($q == "edit" && csrf_check()) {
     } elseif (!empty($_POST['delete']) && $_POST['delete'] == 1) {
         $db->run("DELETE FROM profiles WHERE ip=:ip", [':ip' => $ip]);
         $rewrite_config = true;
+    } elseif (!empty($_POST['disable']) && $_POST['disable'] == 1) {
+        $db->run("UPDATE profiles SET disabled=1 WHERE ip=:ip", [':ip' => $ip]);
+        $rewrite_config = true;
+    } elseif (!empty($_POST['enable']) && $_POST['enable'] == 1) {
+        $db->run("UPDATE profiles SET disabled=0 WHERE ip=:ip", [':ip' => $ip]);
+        $rewrite_config = true;
     }
+
 
 }
 
@@ -202,6 +216,7 @@ PostDown = iptables -D FORWARD -i $_config[net] -o wg0 -j ACCEPT; iptables -D FO
 
 ";
     foreach ($profiles as $profile) {
+        if($profile['disabled']==1) { continue; }
         $wg .= "\n# $profile[name]
 [Peer]
 PublicKey = $profile[public_key]
