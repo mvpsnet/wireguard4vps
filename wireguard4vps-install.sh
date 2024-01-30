@@ -48,6 +48,13 @@ WGPASS=`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c16`
 
 sudo -u www-data php /var/www/html/setup.php $WGPASS > /dev/null
 
+cat << 'EOF' > /var/www/html/.htaccess
+RewriteEngine on
+RewriteCond %{HTTPS} off
+RewriteCond %{THE_REQUEST} !\s/\.well-known/?[?\s] [NC]
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+EOF
+
 systemctl enable --now wg-quick@wg0
 
 systemctl enable --now wireguard4vps.service
